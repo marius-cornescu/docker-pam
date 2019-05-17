@@ -5,16 +5,17 @@ One solution for this issue is to patch the host kernel with the following: [AUD
 )
 
 
-Another option is to patch the libpam on the guest OS running inside the docker container. For this purpose the `sequenceiq/pam` images are created for the most popular operating systems.
+Another option is to patch the libpam on the guest OS running inside the docker container. For this purpose the `rtzan/pam` images are created for the most popular operating systems.
 
 ### Pull the image
 
 ```
-docker pull sequenceiq/pam:centos-6.5
-docker pull sequenceiq/pam:ubuntu-14.04
+docker pull rtzan/pam:centos-6.5
+docker pull rtzan/pam:centos-7.5
+docker pull rtzan/pam:ubuntu-14.04
 ```
 
-Alternatively you can build the image from the Dockerfile from our [GitHub repository](https://github.com/sequenceiq/docker-pam)
+Alternatively you can build the image from the Dockerfile from our [GitHub repository](https://github.com/rtzan/docker-pam)
 
 ### Build the image
 
@@ -23,6 +24,13 @@ Building the Centos 6.5 with PAM audit disabled.
 cd centos-6.5
 docker build --rm -t pam_centos .
 ```
+
+Building the Centos 7.5 with PAM audit disabled.
+```
+cd centos-7.5
+docker build --rm -t rtzan/pam:centos-7.5 .
+```
+
 Building the ubuntu 14.04 with PAM audit disabled.
 ```
 cd ubuntu-14.04
@@ -31,9 +39,15 @@ docker build --rm -t pam_ubuntu .
 ### Test the image
 
 ```
-$ sudo docker run -i -t --net=host sequenceiq/pam:centos-6.5 /bin/bash -c "useradd testuser; su testuser"
+$ sudo docker run -i -t --net=host rtzan/pam:centos-6.5 /bin/bash -c "useradd testuser; su testuser"
 $
 ```
+
+```
+$ docker run -i -t --net=host rtzan/pam:centos-7.5 /bin/bash -c "useradd testuser; su testuser"
+$
+```
+
 
 As reference you can try the original CentOS 6.5 container as guest OS without patched PAM
 
