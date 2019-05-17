@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER SequenceIQ
+MAINTAINER rtzan
 
 #Setup build environment for libpam
 RUN apt-get update -y

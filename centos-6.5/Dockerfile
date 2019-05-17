@@ -1,11 +1,16 @@
+# Creates a centos v6.5
+#
+# docker build -t pam_centos .
 FROM tianon/centos:6.5
-MAINTAINER SequenceIQ
+MAINTAINER rtzan
 
 ADD Centos-Source.repo /etc/yum.repos.d/Centos-Source.repo
 
-RUN yum update -y
+RUN yum install -y yum-plugin-ovl
 
-RUN yum install -y tar bzip2 yum-utils rpm-build
+RUN yum update -y && yum clean all
+
+RUN yum install -y yum-plugin-ovl tar bzip2 yum-utils rpm-build && yum clean all
 
 RUN yum-builddep -y pam
 RUN yumdownloader --source pam
