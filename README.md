@@ -22,7 +22,7 @@ Alternatively you can build the image from the Dockerfile from our [GitHub repos
 Building the Centos 6.5 with PAM audit disabled.
 ```
 cd centos-6.5
-docker build --rm -t pam_centos .
+docker build --rm -t rtzan/pam:centos-6.5 .
 ```
 
 Building the Centos 7.5 with PAM audit disabled.
