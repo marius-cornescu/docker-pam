@@ -39,7 +39,7 @@ docker build --rm -t pam_ubuntu .
 ### Test the image
 
 ```
-$ sudo docker run -i -t --net=host rtzan/pam:centos-6.5 /bin/bash -c "useradd testuser; su testuser"
+$ docker run -i -t --net=host rtzan/pam:centos-6.5 /bin/bash -c "useradd testuser; su testuser"
 $
 ```
 

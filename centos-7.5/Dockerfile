@@ -1,21 +1,41 @@
+################################################################################### 
 # Creates a centos v7.5
 #
-# docker build -t pam_centos .
+# docker build --rm --build-arg http_proxy=$http_proxy -t rtzan/pam:centos-7.5 .
+# 
+# docker run -i -t --net=host rtzan/pam:centos-7.5 /bin/bash
+# 
+################################################################################### 
 FROM centos:centos7.5.1804
 MAINTAINER rtzan
-
+# 
+ARG http_proxy
+# 
+ENV http_proxy $http_proxy
+ENV https_proxy $http_proxy
+# 
 ADD Centos-Source.repo /etc/yum.repos.d/Centos-Source.repo
-
-RUN yum install -y yum-plugin-ovl && yum clean all
-
-RUN yum update -y && yum clean all
-
-RUN yum install -y tar bzip2 yum-utils rpm-build && yum clean all
-
+# 
+RUN touch /var/lib/rpm/* \
+    && yum -y install yum-plugin-ovl
+# 
+RUN yum clean all \
+    && yum -y update
+# 
+RUN yum clean all \
+    && yum install -y tar bzip2 yum-utils rpm-build
+# 
 RUN yum-builddep -y pam
 RUN yumdownloader --source pam
-# RUN rpmbuild --rebuild  --define 'WITH_AUDIT 0' --define 'dist +noaudit' pam*.src.rpm
-# RUN rpm -Uvh --oldpackage ~/rpmbuild/RPMS/*/pam*+noaudit*.rpm
+# 
+RUN yum clean all \
+    && yum -y groupinstall "Development Tools"
+# 
+RUN rpmbuild --rebuild  --define 'WITH_AUDIT 0' --define 'dist +noaudit' pam*.src.rpm
+RUN rpm -Uvh --oldpackage ~/rpmbuild/RPMS/*/pam*+noaudit*.rpm
+# 
+RUN rm -f /*.rpm
+RUN rm -rf ~/rpmbuild
+# 
 
-#RUN rm -f /*.rpm
-#RUN rm -rf ~/rpmbuild
+################################################################################### 
