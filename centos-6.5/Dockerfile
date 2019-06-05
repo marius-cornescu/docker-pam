@@ -33,5 +33,8 @@ RUN rpm -Uvh --oldpackage ~/rpmbuild/RPMS/*/pam*+noaudit*.rpm
 RUN rm -f /*.rpm
 RUN rm -rf ~/rpmbuild
 # 
+RUN yum clean all \
+    && yum -y reinstall cracklib-dicts
+# 
 
 ################################################################################### 

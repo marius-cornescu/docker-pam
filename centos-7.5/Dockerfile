@@ -3,7 +3,7 @@
 #
 # docker build --rm --build-arg http_proxy=$http_proxy -t rtzan/pam:centos-7.5 .
 # 
-# docker run -i -t --net=host rtzan/pam:centos-7.5 /bin/bash
+# docker run -it --net=host rtzan/pam:centos-7.5 /bin/bash
 # 
 ################################################################################### 
 FROM centos:centos7.5.1804
@@ -36,6 +36,9 @@ RUN rpm -Uvh --oldpackage ~/rpmbuild/RPMS/*/pam*+noaudit*.rpm
 # 
 RUN rm -f /*.rpm
 RUN rm -rf ~/rpmbuild
+# 
+RUN yum clean all \
+    && yum -y reinstall cracklib-dicts
 # 
 
 ################################################################################### 
