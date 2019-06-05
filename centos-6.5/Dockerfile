@@ -3,7 +3,7 @@
 #
 # docker build --rm --build-arg http_proxy=$http_proxy -t rtzan/pam:centos-6.5 .
 # 
-# docker run -i -t --net=host rtzan/pam:centos-6.5 /bin/bash
+# docker run -it --net=host rtzan/pam:centos-6.5 /bin/bash
 # 
 ################################################################################### 
 FROM tianon/centos:6.5
